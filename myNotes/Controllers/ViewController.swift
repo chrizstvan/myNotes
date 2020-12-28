@@ -25,6 +25,14 @@ class ViewController: UIViewController, UITableViewDataSource {
         APIService.F.getNotes()
         tableView.reloadData()
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let vc = segue.destination as! DetailViewController
+        
+        if segue.identifier == "detailNoteSegue" {
+            vc.note = notes[tableView.indexPathForSelectedRow!.row]
+        }
+    }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         notes.count
