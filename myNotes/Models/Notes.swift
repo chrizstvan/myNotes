@@ -7,8 +7,15 @@
 
 import Foundation
 
-struct Note: Decodable {
-    let id: Int
+struct Note: Codable {
+    let id: Int?
+    let title: String
+    let descriptions: String
+    let date: String
+    let completed: Bool
+}
+
+struct NoteReq: Codable {
     let title: String
     let descriptions: String
     let date: String
