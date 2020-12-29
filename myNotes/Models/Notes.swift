@@ -14,10 +14,3 @@ struct Note: Codable {
     let date: String
     let completed: Bool
 }
-
-struct NoteReq: Codable {
-    let title: String
-    let descriptions: String
-    let date: String
-    let completed: Bool
-}

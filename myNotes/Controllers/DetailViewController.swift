@@ -10,8 +10,15 @@ import UIKit
 class DetailViewController: UIViewController {
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var bodyTextView: UITextView!
+    @IBOutlet weak var deleteButton: UIBarButtonItem!
     
     var note: Note?
+    
+    var requiredFieldNotEmpty: Bool {
+        !titleTextField.text!.isEmpty
+            && !bodyTextView.text.isEmpty
+            && bodyTextView.text != "Description"
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,6 +29,8 @@ class DetailViewController: UIViewController {
         guard let note = note else {
             titleTextField.placeholder = "Title"
             bodyTextView.text = "Description"
+            deleteButton.isEnabled = false
+            deleteButton.title = ""
             return
         }
         
@@ -30,8 +39,13 @@ class DetailViewController: UIViewController {
     }
 
     @IBAction func saveNote(_ sender: UIBarButtonItem) {
+        guard requiredFieldNotEmpty else {
+            // showing alert field is empty
+            return
+        }
+        
         let formater = DateFormatter()
-        formater.dateStyle = .short
+        formater.dateFormat = "yyyy-MM-dd"
         
         let newNote = Note(
             id: note?.id,
@@ -41,9 +55,17 @@ class DetailViewController: UIViewController {
             completed: false
         )
         
-        //APIService.F.addNote(note: note)
-        APIService.F.updateNote(id: newNote.id!, note: newNote)
+        if newNote.id != nil {
+            APIService.F.updateNote(id: newNote.id!, note: newNote)
+        } else {
+            APIService.F.addNote(note: newNote)
+        }
+        
         navigationController?.popViewController(animated: true)
     }
     
+    @IBAction func deleteNote(_ sender: Any) {
+        APIService.F.deleteNote(id: note!.id!)
+        navigationController?.popViewController(animated: true)
+    }
 }

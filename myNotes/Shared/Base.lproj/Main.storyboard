@@ -121,11 +121,15 @@
                             </barButtonItem>
                             <barButtonItem title="Delete" id="8lx-cM-kZV">
                                 <color key="tintColor" systemColor="systemRedColor"/>
+                                <connections>
+                                    <action selector="deleteNote:" destination="mh1-kp-zs7" id="alX-Ah-Tc1"/>
+                                </connections>
                             </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="bodyTextView" destination="ZoW-uS-pog" id="WgC-al-8rp"/>
+                        <outlet property="deleteButton" destination="8lx-cM-kZV" id="B24-NF-QfG"/>
                         <outlet property="titleTextField" destination="tDl-E5-3JO" id="tEF-qf-yN4"/>
                     </connections>
                 </viewController>
